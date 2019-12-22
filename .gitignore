@@ -20,6 +20,7 @@ local.properties
 .settings/
 .loadpath
 screenshots/**
+test-output/**
 
 # Locally stored "Eclipse launch configurations"
 *.launch
