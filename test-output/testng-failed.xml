@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite thread-count="2" parallel="tests" name="Failed suite [Ecomm Tests]" guice-stage="DEVELOPMENT">
+  <parameter name="implicitWait" value="60"/>
+  <parameter name="grid" value="http://192.168.0.17:4444"/>
+  <parameter name="browser" value="chrome"/>
+  <parameter name="URL" value="http://automationpractice.com/index.php"/>
+  <test name="Ecomm Tests on Chrome">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+      <class name="testscripts.Test_Ecom"/>
+    </classes>
+  </test> <!-- Ecomm Tests on Chrome -->
+  <test parallel="tests" name="Ecomm Tests on Chrome(failed)">
+    <parameter name="browser" value="chrome"/>
+    <classes>
+      <class name="testscripts.Test_Ecom">
+        <methods>
+          <include name="verifyProductConfigurationAndAddingToCart"/>
+          <include name="verifyLaunchEcomApp"/>
+          <include name="verifyNavigationToACategoryUsingMenu"/>
+          <include name="beforeTestRun"/>
+          <include name="verifyMouseOverParticularDressShowsQuickView"/>
+          <include name="beforeSuiteSetUp"/>
+        </methods>
+      </class> <!-- testscripts.Test_Ecom -->
+    </classes>
+  </test> <!-- Ecomm Tests on Chrome(failed) -->
+</suite> <!-- Failed suite [Ecomm Tests] -->
