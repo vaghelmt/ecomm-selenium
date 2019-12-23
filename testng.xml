@@ -4,6 +4,7 @@
 	<parameter name="grid" value="http://192.168.0.17:4444" />
 	<parameter name="URL" value="http://automationpractice.com/index.php"/>
 	<parameter name="implicitWait" value="60"/>
+	<parameter name="explicitWait" value="20"/>
 	<test name="Ecomm Tests on Chrome">
 		<parameter name="browser" value="chrome" />
 		<classes>

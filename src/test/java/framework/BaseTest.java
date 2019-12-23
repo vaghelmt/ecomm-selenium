@@ -12,6 +12,7 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterSuite;
@@ -42,6 +43,7 @@ public class BaseTest {
 	public static ExtentHtmlReporter htmlReporter;
 	public static ExtentTest test;
 	public static ExtentReports extent;
+	public static WebDriverWait wait;
 
 	/**
 	 * reference variable for logger
@@ -70,11 +72,11 @@ public class BaseTest {
 	}
 
 	@BeforeTest
-	@Parameters({ "browser", "grid", "implicitWait" })
-	public void beforeTestRun(String browser, String grid, int implicitWait) {
+	@Parameters({ "browser", "grid", "implicitWait", "explicitWait"})
+	public void beforeTestRun(String browser, String grid, int implicitWait, int explicitWait) {
 		log.info("***************Test Case Execution Starts********************" + Thread.currentThread().getId());
 		initWebDriver(browser, grid);
-		configureDriver(implicitWait);
+		configureDriver(implicitWait,implicitWait);
 
 	}
 
@@ -158,9 +160,10 @@ public class BaseTest {
 
 	}
 
-	private void configureDriver(int implicitWait) {
+	private void configureDriver(int implicitWait, int explicitWait) {
 		getDriver().manage().window().maximize();
 		getDriver().manage().timeouts().implicitlyWait(implicitWait, TimeUnit.SECONDS);
+		wait = new WebDriverWait(getDriver(),explicitWait);
 	}
 
 }
