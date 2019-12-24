@@ -98,7 +98,7 @@ public class BaseTest {
 		// closeWebDriver();
 
 		try {
-			String screenshotPath = Helper.getScreenshot(getDriver(), result.getName());
+			String screenshotPath = BrowserUtils.getScreenshot(getDriver(), result.getName());
 
 			if (result.getStatus() == ITestResult.FAILURE) {
 				test.log(Status.FAIL, "TEST CASE FAILED: " + result.getName()); // name

@@ -1,21 +1,45 @@
 package pageobjects;
 
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import framework.BrowserUtils;
+
 public class BasePage {
-	WebDriver driver;
-	WebDriverWait wait;
+	public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	public static ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
+//	public static ThreadLocal<BrowserUtils> browserUtils = new ThreadLocal<>();
+//	public static WebDriver driver;
+//	public static WebDriverWait wait;
+//	public static BrowserUtils helper;
 	
 	public BasePage(WebDriver driver){
-		this.driver = driver;
-		wait = new WebDriverWait(driver,20);
+		BasePage.driver.set(driver);
+		BasePage.wait.set(new WebDriverWait(driver,20));
+		BrowserUtils.driver.set(getDriver());
+		BrowserUtils.wait.set(getDriverWait());
 	}
 	
-	public void waitTillElementIsCickable(WebElement elem){
-		wait.until(ExpectedConditions.elementToBeClickable(elem));
+	public WebDriver getDriver() {
+		return driver.get();
 	}
+	
+	public WebDriverWait getDriverWait() {
+		return wait.get();
+	}
+
+	public BasePage() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	@Override
+	public void finalize() {
+		driver.remove();
+		wait.remove();
+		driver=null;
+		wait=null;
+		
+	}
+
 
 }

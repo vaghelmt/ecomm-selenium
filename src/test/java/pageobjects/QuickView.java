@@ -6,12 +6,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import framework.Helper;
+import framework.BrowserUtils;
 
-public class QuickView {
-	
-	WebDriver driver;
-	WebDriverWait wait;
+public class QuickView extends BasePage{
 	
 	@FindBy(id="group_1")
 	WebElement drpSize;
@@ -19,20 +16,34 @@ public class QuickView {
 	@FindBy(name = "Submit")
 	WebElement btnAddToCart;
 
-	
-	public QuickView(WebDriver driver, WebDriverWait wait, WebElement elem){
-		this.driver = driver;
-		this.wait = wait;
-		Helper.switchToFrame(driver, wait, elem);
-		PageFactory.initElements(driver, this);
+	/**
+	 * This constructor instantiates the quick view page object and
+	 * switches the frame as quick view modal window is present in a
+	 * different frame. It also initializes the page factory objects. 
+	 * @param elem iframe WebElement holding the quick view modal window
+	 * @author Mitulsinh Vaghela
+	 */
+	public QuickView(WebElement elem){
+		BrowserUtils.switchToFrame(elem);
+		PageFactory.initElements(getDriver(), this);
 	}
 	
+	/**
+	 * This method selects one of the product sizes from the dropdown
+	 * @param productSize size of the product present in dropdown
+	 * @author Mitulsinh Vaghela
+	 */
 	public void selectProductSize(String productSize) {
-		Helper.selectValueByName(driver, wait, drpSize, productSize);
+		BrowserUtils.selectValueByName( drpSize, productSize);
 	}
 	
+	/**
+	 * This method adds a product to cart from the quick view modal window
+	 * @author Mitulsinh Vaghela
+	 */
 	public void addToCart() {
-		Helper.click(driver, wait, btnAddToCart);
+		BrowserUtils.click( btnAddToCart);
+		BrowserUtils.switchToDefaultContent();
 	}
 	
 

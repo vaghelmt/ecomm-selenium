@@ -17,22 +17,35 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class Helper {
+public class BrowserUtils {
 
+	public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	public static ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
+//	public static WebDriver driver;
+//	public static WebDriverWait wait;
+	
+	public static WebDriver getDriver() {
+		return driver.get();
+	}
+	
+	public static WebDriverWait getDriverWait() {
+		return wait.get();
+	}
 	/**
 	 * reference variable for logger
 	 */
 	private static final Logger log = Logger.getLogger("ecomm");
 
-	public static void moveMouseOverElement(WebDriver driver, WebDriverWait wait, WebElement elem) {
-		Actions builder = new Actions(driver);
+	public static void moveMouseOverElement(WebElement elem) {
+		scrollIntoView(elem);
+		Actions builder = new Actions(getDriver());
 		builder.moveToElement(elem).build().perform();
 	}
 
-	public static void click(WebDriver driver, WebDriverWait wait, WebElement elem) {
+	public static void click(WebElement elem) {
 		try {
 			//scrollIntoView(driver, elem);
-			wait.until(ExpectedConditions.elementToBeClickable(elem));
+			getDriverWait().until(ExpectedConditions.elementToBeClickable(elem));
 			elem.click();
 
 		} catch (Exception e) {
@@ -41,8 +54,16 @@ public class Helper {
 
 	}
 
-	public static boolean isDisplayed(WebDriver driver, WebDriverWait wait, WebElement elem) {
-		return elem.isDisplayed();
+	public static boolean isDisplayed(WebElement elem) throws AutomationException {
+		try {
+			//wait.until(ExpectedConditions.visibilityOf(elem));
+			return elem.isDisplayed();
+			
+		} catch (Exception e) {
+			throw new AutomationException(e.getMessage());
+		}
+		
+		
 	}
 
 	public static String getScreenshot(WebDriver driver, String screenshotName) throws IOException {
@@ -57,14 +78,14 @@ public class Helper {
 
 	}
 
-	public static void selectValueByName(WebDriver driver, WebDriverWait wait, WebElement elem, String productSize) {
+	public static void selectValueByName(WebElement elem, String productSize) {
 		Select dropDown = new Select(elem);
 		dropDown.selectByVisibleText(productSize);
 
 	}
 
-	public static void switchToFrame(WebDriver driver, WebDriverWait wait, WebElement frameName) {
-		wait.until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
+	public static void switchToFrame(WebElement frameName) {
+		getDriverWait().until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
 		// driver.switchTo().frame(frameName);
 		try {
 			Thread.sleep(2000);
@@ -75,19 +96,38 @@ public class Helper {
 		log.info("Swithed to Quick View frame successfully");
 	}
 
-	public static void write(WebDriver driver, WebDriverWait wait, WebElement elem, String text) {
+	public static void write(WebElement elem, String text) {
 		elem.sendKeys(text);
 	}
 
-	public static void selectValueByValue(WebDriver driver, WebDriverWait wait, WebElement elem,
-			String value) {
+	public static void selectValueByValue(WebElement elem,String value) {
 		Select dropDown = new Select(elem);
 		dropDown.selectByValue(value);
 		
 	}
 	
-	public static void scrollIntoView(WebDriver driver, WebElement elem) {
-		((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", elem);
+	public static void scrollIntoView(WebElement elem) {
+		((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", elem);
+	}
+
+	public static void switchToDefaultContent() {
+		getDriver().switchTo().defaultContent();
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		log.info("Swithed to default window successfully");
+	}
+	
+	@Override
+	public void finalize() {
+		driver.remove();
+		wait.remove();
+		driver=null;
+		wait=null;
+		
 	}
 
 }

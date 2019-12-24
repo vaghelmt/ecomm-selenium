@@ -8,17 +8,17 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import framework.Helper;
+import framework.BrowserUtils;
 
-public class CheckoutPage {
+public class CheckoutPage extends BasePage {
 
-	WebDriver driver;
-	WebDriverWait wait;
-
-	public CheckoutPage(WebDriver driver, WebDriverWait wait) {
-		this.driver = driver;
-		this.wait = wait;
-		PageFactory.initElements(driver, this);
+	/**
+	 * This constructor instantiates the checkout page object and 
+	 * initializes the page factory objects. 
+	 * @author Mitulsinh Vaghela
+	 */
+	public CheckoutPage() {
+		PageFactory.initElements(getDriver(), this);
 	}
 
 	@FindBy(id = "cart_title")
@@ -106,102 +106,157 @@ public class CheckoutPage {
 	@FindBy(xpath="//table[@id='cart_summary']//p[@class='product-name']/following-sibling::small/a")
 	WebElement txtConfirmOrderProductSize;
 
+	/**
+	 * This method checks if checkout page is displayed
+	 * @return boolean true if checkout page is displayed else false
+	 * @author Mitulsinh Vaghela
+	 */
 	public boolean isCheckoutPageDisplayed() {
-		return (Helper.isDisplayed(driver, wait, tblCartContents) & Helper.isDisplayed(driver, wait, txtCartTitle));
+		return (BrowserUtils.isDisplayed(tblCartContents) & BrowserUtils.isDisplayed(txtCartTitle));
 	}
 
+	/**
+	 * This method clicks on proceed to checkout button displayed on different steps
+	 * in the check out process except Shipping page. For shipping page, 
+	 * @see proceedToCheckoutOnShipping method.
+	 * @author Mitulsinh Vaghela
+	 */
 	public void proceedToCheckout() {
-		Helper.click(driver, wait, btnProceedToCheckout);
+		BrowserUtils.click(btnProceedToCheckout);
 	}
 	
+	/**
+	 * This method clicks on proceed to checkout button displayed on shipping page
+	 * @author Mitulsinh Vaghela
+	 */
 	public void proceedToCheckoutOnShipping() {
-		Helper.click(driver, wait, btnProceedToCheckoutOnShipping);
+		BrowserUtils.click(btnProceedToCheckoutOnShipping);
 	}
 
+	/**
+	 * This method checks if sign in section is displayed in the check out process
+	 * @return boolean true if sign in section is displayed else false
+	 * @author Mitulsinh Vaghela
+	 */
 	public boolean isSigninPageDisplayed() {
-		return Helper.isDisplayed(driver, wait, btnCreateAccount);
+		return BrowserUtils.isDisplayed(btnCreateAccount);
 	}
 
+	/**
+	 * This method sets value in Email Address textbox displayed on sign in section
+	 * @param email email address
+	 * @author Mitulsinh Vaghela
+	 */
 	public void setEmailAddress(String email) {
-		Helper.write(driver, wait, tbxEmail, email);
+		BrowserUtils.write(tbxEmail, email);
 	}
 
+	/**
+	 * This method clicks on Create Account button displayed on sign in section
+	 * @author Mitulsinh Vaghela
+	 */
 	public void createAnAccount() {
-		Helper.click(driver, wait, btnCreateAccount);
+		BrowserUtils.click(btnCreateAccount);
 	}
 
+	/**
+	 * This method sets value in First Name textbox on register user form
+	 * @param firstName first name
+	 * @author Mitulsinh Vaghela
+	 */
 	public void setFirstName(String firstName) {
-		Helper.write(driver, wait, tbxFirstName, firstName);
+		BrowserUtils.write(tbxFirstName, firstName);
 
 	}
 
+	/**
+	 * This method sets value in Last Name textbox on register user form
+	 * @param LastName last name
+	 * @author Mitulsinh Vaghela
+	 */
 	public void setLastName(String LastName) {
-		Helper.write(driver, wait, tbxLastName, LastName);
+		BrowserUtils.write(tbxLastName, LastName);
 	}
 
+	/**
+	 * This method sets value in password textbox on register user form
+	 * @param password password
+	 * @author Mitulsinh Vaghela
+	 */
 	public void setPassword(String password) {
-		Helper.write(driver, wait, tbxPassword, password);
+		BrowserUtils.write(tbxPassword, password);
 	}
 
+	/**
+	 * This method selects a value in Birth Day dropdown on register user form
+	 * @param day Birth day - 1,2,3...31
+	 * @author Mitulsinh Vaghela
+	 */
 	public void selectBirthDay(String day) {
-		Helper.selectValueByValue(driver, wait, drpDayofBirth, day);
+		BrowserUtils.selectValueByValue( drpDayofBirth, day);
 	}
 	
+	
+	/**
+	 * This method selects a value in Month dropdown on register user form
+	 * @param month Month - January, February so on.
+	 * @author Mitulsinh Vaghela
+	 */
 	public void selectBirthMonth(String Month) {
-		Helper.selectValueByValue(driver, wait, drpMonthofBirth, Month);
+		BrowserUtils.selectValueByValue( drpMonthofBirth, Month);
 		
 	}
 	
 	public void selectBirthYear(String Year) {
-		Helper.selectValueByValue(driver, wait, drpYearsofBirth, Year);
+		BrowserUtils.selectValueByValue( drpYearsofBirth, Year);
 		
 	}
 	
 	public void setAddressLine1(String addressLine1) {
-		Helper.write(driver, wait, tbxAddress1, addressLine1);
+		BrowserUtils.write( tbxAddress1, addressLine1);
 		
 	}
 	
 	public void setCity(String city) {
-		Helper.write(driver, wait, tbxCity, city);
+		BrowserUtils.write( tbxCity, city);
 		
 	}
 	
 	public void selectState(String state) {
-		Helper.selectValueByName(driver, wait, drpState, state);
+		BrowserUtils.selectValueByName( drpState, state);
 	}
 	
 	public void setPostalCode(String postalCode) {
-		Helper.write(driver, wait, tbxPostalCode, postalCode);
+		BrowserUtils.write( tbxPostalCode, postalCode);
 		
 	}
 	
 	public void selectCountry(String country) {
-		Helper.selectValueByName(driver, wait, drpCountry, country);
+		BrowserUtils.selectValueByName( drpCountry, country);
 
 	}
 	
 	public void setMobilePhone(String phoneNumber) {
-		Helper.write(driver, wait, tbxMobilePhoneNumber, phoneNumber);
+		BrowserUtils.write( tbxMobilePhoneNumber, phoneNumber);
 		
 	}
 	
 	public void setAddressAlias(String addressAlias) {
-		Helper.write(driver, wait, tbxAddressAlias, addressAlias);
+		BrowserUtils.write( tbxAddressAlias, addressAlias);
 		
 	}
 	
 	public void register() {
-		Helper.click(driver, wait, btnRegister);
+		BrowserUtils.click( btnRegister);
 	}
 	
 	public boolean isUseSameAddressOptionDisplayed() {
-		return Helper.isDisplayed(driver, wait, cbxUseSameAddress);
+		return BrowserUtils.isDisplayed( cbxUseSameAddress);
 	}
 	
 	public void agreeToTermsAndService(){
 		cbxTermsOfService.click();
-		//Helper.click(driver, wait, cbxTermsOfService);
+		//Helper.click( cbxTermsOfService);
 		
 	}
 	

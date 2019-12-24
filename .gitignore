@@ -4,6 +4,7 @@ target/**
 *.war
 *.ear
 *.class
+*.log
 
 # eclipse specific
 .project
