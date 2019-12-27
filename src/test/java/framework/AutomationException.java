@@ -7,7 +7,7 @@ public class AutomationException extends RuntimeException{
 	/**
 	 * reference variable for logger
 	 */
-	private static final Logger log = Logger.getLogger("ecomm");
+	private static final Logger log = Logger.getLogger(AutomationException.class);
 	private String errorMessage;
 	
 	public AutomationException(String errorDescription) {

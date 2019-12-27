@@ -29,8 +29,12 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.reporter.configuration.Theme;
 
 /**
- * The BaseTest class initializes the test environment It also cleans up
- * resources once test is over.
+ * The BaseTest class acts as a base for all the tests. As such, it initializes
+ * the overall test environment i.e. instantiates drivers as per configurations,
+ * initializes the logging and reporting framework and basically taking care of
+ * tasks that are common to all the tests. 
+ * It also cleans up resources once test is over.
+ * @author Mitulsinh Vaghela
  */
 public class BaseTest {
 	/**
@@ -48,8 +52,14 @@ public class BaseTest {
 	/**
 	 * reference variable for logger
 	 */
-	private static final Logger log = Logger.getLogger("ecomm");
+	private static final Logger log = Logger.getLogger(BaseTest.class);
 
+	/**
+	 * This TestNG "Before suite" method is a batch execution level method. 
+	 * Before every test execution starts, it sets up batch level environment variables
+	 * like logger, reporting variables and so on.
+	 * @author Mitulsinh Vaghela
+	 */
 	@BeforeSuite
 	public void beforeSuiteSetUp() {
 		log.info("***************Test Execution Starts********************");
@@ -64,6 +74,12 @@ public class BaseTest {
 		extent.setSystemInfo("SDET", "Mitulsinh Vaghela");
 	}
 
+	/**
+	 * This TestNG "After suite" method is a batch execution level method. 
+	 * After every test execution starts, it tears down the environment variables
+	 * and create the result report.
+	 * @author Mitulsinh Vaghela
+	 */
 	@AfterSuite
 	public void afterSuiteTearDown() {
 		quitWebDriver();
@@ -71,6 +87,11 @@ public class BaseTest {
 		extent.flush();
 	}
 
+	/**
+	 * This TestNG "Before test" method is used instantiate and configure the
+	 * WebDriver based on preference set in the testng.xml file
+	 * @author Mitulsinh Vaghela
+	 */
 	@BeforeTest
 	@Parameters({ "browser", "grid", "implicitWait", "explicitWait"})
 	public void beforeTestRun(String browser, String grid, int implicitWait, int explicitWait) {
@@ -80,6 +101,11 @@ public class BaseTest {
 
 	}
 
+	/**
+	 * This TestNG "after test" method is used to close all WebDriver once the
+	 * test is completed
+	 * @author Mitulsinh Vaghela
+	 */
 	@AfterTest
 	public void afterTestRun() {
 		// quitWebDriver();
@@ -93,6 +119,13 @@ public class BaseTest {
 		// System.out.println("Before method: " + Thread.currentThread().getId());
 	}
 
+	/**
+	 * This TestNG "after method" method is used to read the TestNG ITestResult object
+	 * after each method run, determines if the test was pass or failed and accordingly
+	 * makes an entry in the Extent Report along with a screenshot
+	 * @param result ITestResult provided by TestNG framework
+	 * @author Mitulsinh Vaghela
+	 */
 	@AfterMethod
 	public void AfterMethod(ITestResult result) {
 		// closeWebDriver();
@@ -118,19 +151,40 @@ public class BaseTest {
 		}
 	}
 
+	
+	/**
+	 * This method fetches the WebDriver instance from thread local variable
+	 * @return WebDriver driver returned from thread local variable
+	 * @author Mitulsinh Vaghela
+	 */
 	public WebDriver getDriver() {
 		return driver.get();
 	}
 
+	/**
+	 * This method quits all the active instances of WebDrivers running in a 
+	 * particular thread
+	 * @author Mitulsinh Vaghela
+	 */
 	private void closeWebDriver() {
 		getDriver().quit();
 	}
 
+	/**
+	 * This method removes the instance of WebDriver present in a particular
+	 * thread local variable
+	 * @author Mitulsinh Vaghela
+	 */
 	private void quitWebDriver() {
 		driver.remove();
 
 	}
 
+	/**
+	 * This method instantiates WebDrivers based on browser preferences set in the
+	 * testng.xml
+	 * @author Mitulsinh Vaghela
+	 */
 	private void initWebDriver(String browser, String grid) {
 		/**
 		 * Initialize webdriver as per configuration file
@@ -160,6 +214,12 @@ public class BaseTest {
 
 	}
 
+	/**
+	 * This method takes care of driver configurations
+	 * i.e. setting up driver size and resolution,
+	 * configuring implicit and explicit waits and so on.
+	 * @author Mitulsinh Vaghela
+	 */
 	private void configureDriver(int implicitWait, int explicitWait) {
 		getDriver().manage().window().maximize();
 		getDriver().manage().timeouts().implicitlyWait(implicitWait, TimeUnit.SECONDS);

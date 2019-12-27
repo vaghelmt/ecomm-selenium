@@ -1,5 +1,6 @@
 package pageobjects;
 
+import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -9,6 +10,8 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import framework.BrowserUtils;
 
 public class QuickView extends BasePage{
+	
+	private static final Logger log = Logger.getLogger(QuickView.class);
 	
 	@FindBy(id="group_1")
 	WebElement drpSize;
