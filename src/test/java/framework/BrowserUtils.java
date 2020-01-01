@@ -36,11 +36,12 @@ import testscripts.Test_Ecom;
  */
 public class BrowserUtils {
 
-	public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
-	public static ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
-	public static ThreadLocal<String> errorDescription = new ThreadLocal<>();
-//	public static WebDriver driver;
-//	public static WebDriverWait wait;
+	/**refers to thread loacal variable for the Webdriver*/
+	public static final ThreadLocal<WebDriver> driver = new ThreadLocal<>();
+	/**refers to thread loacal variable for the Webdriver Wait*/
+	public static final ThreadLocal<WebDriverWait> wait = new ThreadLocal<>();
+	/**refers to thread loacal variable for error description used for exception handling*/
+	private static final ThreadLocal<String> errorDescription = new ThreadLocal<>();
 
 	/**
 	 * This method fetches the WebDriver instance from thread local variable
@@ -69,12 +70,14 @@ public class BrowserUtils {
 
 	/**
 	 * This method moves the mouse over a WebElement
+	 * 
 	 * @param elem WebElement to be acted upon
-	 * @throws AutomationException if automation execution is interrupted.
-	 * 								the reason for interruption is provided as a string
+	 * @throws AutomationException if automation execution is interrupted. the
+	 *                             reason for interruption is provided as a string
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void moveMouseOverElement(WebElement elem) throws AutomationException {
+		log.info("moveMouseOverElement(WebElement elem) is invoked");
 		try {
 			scrollIntoView(elem);
 			Actions builder = new Actions(getDriver());
@@ -86,8 +89,9 @@ public class BrowserUtils {
 			errorDescription.set("WebElement is not visible in viewport");
 			throw new AutomationException(errorDescription.get());
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
+		log.info("moveMouseOverElement(WebElement elem) is completed");
 	}
 
 	/**
@@ -97,6 +101,7 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void click(WebElement elem) throws AutomationException {
+		log.info("click(WebElement elem) is invoked");
 		try {
 			// scrollIntoView(driver, elem);
 			getDriverWait().until(ExpectedConditions.elementToBeClickable(elem));
@@ -109,8 +114,9 @@ public class BrowserUtils {
 			errorDescription.set("WebElement could not be clicked properly as it may be obscured");
 			throw new AutomationException(errorDescription.get());
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
+		log.info("click(WebElement elem) is completed");
 
 	}
 
@@ -122,10 +128,10 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static boolean isDisplayed(WebElement elem) throws AutomationException {
+		log.info("isDisplayed(WebElement elem) is invoked and boolean to be returned");
 		try {
 			// wait.until(ExpectedConditions.visibilityOf(elem));
 			return elem.isDisplayed();
-
 		} catch (StaleElementReferenceException e) {
 			errorDescription.set("WebElement reference is stale");
 			throw new AutomationException(errorDescription.get());
@@ -135,7 +141,7 @@ public class BrowserUtils {
 			throw new AutomationException(errorDescription.get());
 
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
 
 	}
@@ -150,6 +156,7 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static String getScreenshot(WebDriver driver, String screenshotName) throws IOException {
+		log.info("getScreenshot(WebDriver driver, String screenshotName) is invoked");
 		String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File source = ts.getScreenshotAs(OutputType.FILE);
@@ -157,6 +164,8 @@ public class BrowserUtils {
 		String destination = System.getProperty("user.dir") + "/screenshots/" + screenshotName + dateName + ".png";
 		File finalDestination = new File(destination);
 		FileUtils.copyFile(source, finalDestination);
+		log.info(
+				"getScreenshot(WebDriver driver, String screenshotName) is completed and screenshot path to be returned");
 		return destination;
 
 	}
@@ -170,6 +179,7 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void selectValueByName(WebElement elem, String productSize) throws AutomationException {
+		log.info("selectValueByName(WebElement elem, String productSize) is invoked");
 		try {
 			Select dropDown = new Select(elem);
 			dropDown.selectByVisibleText(productSize);
@@ -182,8 +192,9 @@ public class BrowserUtils {
 			throw new AutomationException(errorDescription.get());
 
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
+		log.info("selectValueByName(WebElement elem, String productSize) is completed");
 
 	}
 
@@ -194,9 +205,12 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void switchToFrame(WebElement frameName) throws AutomationException {
+		log.info("switchToFrame(WebElement frameName) is invoked");
 		getDriverWait().until(ExpectedConditions.frameToBeAvailableAndSwitchToIt(frameName));
+
 		// driver.switchTo().frame(frameName);
 		try {
+			log.info("Waiting for 2 seconds as swithing frame process is slow");
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
@@ -214,9 +228,9 @@ public class BrowserUtils {
 			throw new AutomationException(errorDescription.get());
 
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
-		log.info("Swithed to Quick View frame successfully");
+		log.info("switchToFrame(WebElement frameName) is completed");
 	}
 
 	/**
@@ -226,6 +240,7 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void write(WebElement elem, String text) throws AutomationException {
+		log.info("write(WebElement elem, String text) is invoked");
 		try {
 			elem.sendKeys(text);
 		} catch (StaleElementReferenceException e) {
@@ -237,8 +252,9 @@ public class BrowserUtils {
 			throw new AutomationException(errorDescription.get());
 
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
+		log.info("write(WebElement elem, String text) is completed");
 	}
 
 	/**
@@ -250,6 +266,7 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void selectValueByValue(WebElement elem, String value) throws AutomationException {
+		log.info("selectValueByValue(WebElement elem, String value) is invoked");
 		try {
 			Select dropDown = new Select(elem);
 			dropDown.selectByValue(value);
@@ -262,8 +279,9 @@ public class BrowserUtils {
 			throw new AutomationException(errorDescription.get());
 
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
+		log.info("selectValueByValue(WebElement elem, String value) is completed");
 
 	}
 
@@ -275,12 +293,14 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void scrollIntoView(WebElement elem) throws AutomationException {
+		log.info("scrollIntoView(WebElement elem) is invoked");
 		try {
 			((JavascriptExecutor) getDriver()).executeScript("arguments[0].scrollIntoView(true);", elem);
 		} catch (Exception e) {
 			errorDescription.set("Error occured while running javascript executor");
 			throw new AutomationException(errorDescription.get());
 		}
+		log.info("scrollIntoView(WebElement elem) is completed");
 	}
 
 	/**
@@ -289,13 +309,15 @@ public class BrowserUtils {
 	 * @author Mitulsinh Vaghela
 	 */
 	public static void switchToDefaultContent() throws AutomationException {
+		log.info("switchToDefaultContent() is invoked");
 		getDriver().switchTo().defaultContent();
 		try {
+			log.info("Waiting for 2 seconds as swithing frame process is slow");
 			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}catch (StaleElementReferenceException e) {
+		} catch (StaleElementReferenceException e) {
 			errorDescription.set("WebElement reference is stale");
 			throw new AutomationException(errorDescription.get());
 
@@ -304,17 +326,15 @@ public class BrowserUtils {
 			throw new AutomationException(errorDescription.get());
 
 		} catch (Exception e) {
-			throw new AutomationException(e.getStackTrace().toString());
+			throw new AutomationException(e.toString());
 		}
-		log.info("Swithed to default window successfully");
+		log.info("switchToDefaultContent() is completed");
 	}
 
 	@Override
 	public void finalize() {
 		driver.remove();
 		wait.remove();
-		driver = null;
-		wait = null;
 
 	}
 

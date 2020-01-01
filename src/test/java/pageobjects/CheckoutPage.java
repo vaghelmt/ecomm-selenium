@@ -14,7 +14,9 @@ import framework.BrowserUtils;
 
 public class CheckoutPage extends BasePage {
 
+	/**logger reference variable*/
 	private static final Logger log = Logger.getLogger(CheckoutPage.class);
+
 	/**
 	 * This constructor instantiates the checkout page object and initializes the
 	 * page factory objects.
@@ -22,92 +24,108 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public CheckoutPage() {
+		log.info("CheckoutPage constructor is invoked");
 		PageFactory.initElements(getDriver(), this);
+		log.info("Checkout page object intialized successfully and constrcutor ends");
 	}
 
+	/**refers to the cart label displayed on the check out page*/
 	@FindBy(id = "cart_title")
-	WebElement txtCartTitle;
+	private WebElement txtCartTitle;
 
+	/**refers to table that contains the items in the cart*/
 	@FindBy(id = "cart_summary")
-	WebElement tblCartContents;
+	private WebElement tblCartContents;
 
+	/**refers to proceed to check out button on all the sections of check out page
+	 * except shipping section
+	 */
 	@FindBy(xpath = "//span[text()='Proceed to checkout']/i[contains(@class,'icon-chevron')]")
-	WebElement btnProceedToCheckout;
+	private WebElement btnProceedToCheckout;
 
+	/**refers to proceed to check out button on shipping section of check out page*/
 	@FindBy(xpath = "//button[@type='submit']/span[contains(text(),'Proceed to checkout')]/i[contains(@class,'icon-chevron')]")
-	WebElement btnProceedToCheckoutOnShipping;
+	private WebElement btnProceedToCheckoutOnShipping;
 
+	/**refers to create account label displayed on the Sign in section*/
 	@FindBy(id = "SubmitCreate")
-	WebElement btnCreateAccount;
+	private WebElement btnCreateAccount;
 
+	/**refers to email address textbox displayed on the Sign in section*/
 	@FindBy(id = "email_create")
-	WebElement tbxEmail;
-
-//	@FindBy(id="id_gender1")
-//	WebElement titleMr;
-//	
-//	@FindBy(id="id_gender2")
-//	WebElement titleMrs;
-
+	private WebElement tbxEmail;
+	
+	/**refers to first name textbox displayed on the registration form*/
 	@FindBy(id = "customer_firstname")
-	WebElement tbxFirstName;
+	private WebElement tbxFirstName;
 
+	/**refers to last name textbox displayed on the registration form*/
 	@FindBy(id = "customer_lastname")
-	WebElement tbxLastName;
+	private WebElement tbxLastName;
 
+	/**refers to password textbox displayed on the registration form*/
 	@FindBy(id = "passwd")
-	WebElement tbxPassword;
+	private WebElement tbxPassword;
 
+	/**refers to Birth Day dropdown displayed on the registration form*/
 	@FindBy(id = "days")
-	WebElement drpDayofBirth;
+	private WebElement drpDayofBirth;
 
+	/**refers to Birth Month dropdown displayed on the registration form*/
 	@FindBy(id = "months")
-	WebElement drpMonthofBirth;
+	private WebElement drpMonthofBirth;
 
+	/**refers to Birth Year dropdown displayed on the registration form*/
 	@FindBy(id = "years")
-	WebElement drpYearsofBirth;
+	private WebElement drpYearsofBirth;
 
-//	@FindBy(id="firstname")
-//	WebElement addressFirstName;
-//
-//	@FindBy(id="lastname")
-//	WebElement addressLastName;
-
+	/**refers to Address textbox displayed on the registration form*/
 	@FindBy(id = "address1")
-	WebElement tbxAddress1;
+	private WebElement tbxAddress1;
 
+	/**refers to city textbox displayed on the registration form*/
 	@FindBy(id = "city")
-	WebElement tbxCity;
+	private WebElement tbxCity;
 
+	/**refers to State dropdown displayed on the registration form*/
 	@FindBy(id = "id_state")
-	WebElement drpState;
+	private WebElement drpState;
 
+	/**refers to Zip/Postal code textbox displayed on the registration form*/
 	@FindBy(id = "postcode")
-	WebElement tbxPostalCode;
+	private WebElement tbxPostalCode;
 
+	/**refers to country dropdown displayed on the registration form*/
 	@FindBy(id = "id_country")
-	WebElement drpCountry;
+	private WebElement drpCountry;
 
+	/**refers to mobile phone textbox displayed on the registration form*/
 	@FindBy(id = "phone_mobile")
-	WebElement tbxMobilePhoneNumber;
+	private WebElement tbxMobilePhoneNumber;
 
+	/**refers to Address Alias textbox displayed on the registration form*/
 	@FindBy(id = "alias")
-	WebElement tbxAddressAlias;
+	private WebElement tbxAddressAlias;
 
+	/**refers to register button displayed on the registration form*/
 	@FindBy(id = "submitAccount")
-	WebElement btnRegister;
+	private WebElement btnRegister;
 
+	/**refers to Use same address checkbox displayed on the shipping section*/
 	@FindBy(id = "addressesAreEquals")
-	WebElement cbxUseSameAddress;
+	private WebElement cbxUseSameAddress;
 
+	/**refers to terms of service checkbox displayed on the shipping section*/
 	@FindBy(id = "cgv")
-	WebElement cbxTermsOfService;
+	private WebElement cbxTermsOfService;
 
+	/**refers to prodcut name displayed on confirm section*/
 	@FindBy(css = "table#cart_summary p.product-name a")
-	WebElement lnkConfirmOrderProductName;
+	private WebElement lnkConfirmOrderProductName;
 
+	/**refers to prodcut size displayed on confirm section*/
 	@FindBy(xpath = "//table[@id='cart_summary']//p[@class='product-name']/following-sibling::small/a")
-	WebElement txtConfirmOrderProductSize;
+	private WebElement txtConfirmOrderProductSize;
 
 	/**
 	 * This method checks if checkout page is displayed
@@ -116,6 +134,7 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isCheckoutPageDisplayed() throws AutomationException {
+		log.info("isCheckoutPageDisplayed() is invoked and boolean will be returned");
 		return (BrowserUtils.isDisplayed(tblCartContents) & BrowserUtils.isDisplayed(txtCartTitle));
 	}
 
@@ -127,7 +146,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void proceedToCheckout() throws AutomationException {
+		log.info("proceedToCheckout() is invoked");
 		BrowserUtils.click(btnProceedToCheckout);
+		log.info("proceedToCheckout() is completed");
 	}
 
 	/**
@@ -136,7 +157,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void proceedToCheckoutOnShipping() throws AutomationException {
+		log.info("proceedToCheckoutOnShipping() is invoked");
 		BrowserUtils.click(btnProceedToCheckoutOnShipping);
+		log.info("proceedToCheckoutOnShipping() is completed");
 	}
 
 	/**
@@ -146,6 +169,7 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isSigninPageDisplayed() throws AutomationException {
+		log.info("isSigninPageDisplayed() is invoked and boolean will be returned");
 		return BrowserUtils.isDisplayed(btnCreateAccount);
 	}
 
@@ -156,7 +180,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setEmailAddress(String email) throws AutomationException {
+		log.info("setEmailAddress(String email) is invoked");
 		BrowserUtils.write(tbxEmail, email);
+		log.info("setEmailAddress(String email) is completed");
 	}
 
 	/**
@@ -165,7 +191,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void createAnAccount() throws AutomationException {
+		log.info("createAnAccount() is invoked");
 		BrowserUtils.click(btnCreateAccount);
+		log.info("createAnAccount() is completed");
 	}
 
 	/**
@@ -175,7 +203,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setFirstName(String firstName) throws AutomationException {
+		log.info("setFirstName(String firstName) is invoked");
 		BrowserUtils.write(tbxFirstName, firstName);
+		log.info("setFirstName(String firstName) is completed");
 
 	}
 
@@ -186,7 +216,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setLastName(String LastName) throws AutomationException {
+		log.info("setLastName(String LastName) is invoked");
 		BrowserUtils.write(tbxLastName, LastName);
+		log.info("setLastName(String LastName) is completed");
 	}
 
 	/**
@@ -196,7 +228,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setPassword(String password) throws AutomationException {
+		log.info("setPassword(String password) is invoked");
 		BrowserUtils.write(tbxPassword, password);
+		log.info("setPassword(String password) is completed");
 	}
 
 	/**
@@ -206,7 +240,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void selectBirthDay(String day) throws AutomationException {
+		log.info("selectBirthDay(String day) is invoked");
 		BrowserUtils.selectValueByValue(drpDayofBirth, day);
+		log.info("selectBirthDay(String day) is completed");
 	}
 
 	/**
@@ -216,7 +252,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void selectBirthMonth(String Month) throws AutomationException {
+		log.info("selectBirthDay(String day) is invoked");
 		BrowserUtils.selectValueByValue(drpMonthofBirth, Month);
+		log.info("selectBirthDay(String day) is completed ");
 
 	}
 
@@ -227,7 +265,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void selectBirthYear(String Year) throws AutomationException {
+		log.info("selectBirthYear(String Year) is invoked");
 		BrowserUtils.selectValueByValue(drpYearsofBirth, Year);
+		log.info("selectBirthYear(String Year) is completed");
 
 	}
 
@@ -238,7 +278,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setAddressLine1(String addressLine1) throws AutomationException {
+		log.info("setAddressLine1(String addressLine1) is invoked");
 		BrowserUtils.write(tbxAddress1, addressLine1);
+		log.info("setAddressLine1(String addressLine1) is completed");
 
 	}
 
@@ -249,7 +291,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setCity(String city) throws AutomationException {
+		log.info("setCity(String city) is invoked");
 		BrowserUtils.write(tbxCity, city);
+		log.info("setCity(String city) is completed");
 
 	}
 
@@ -260,7 +304,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void selectState(String state) throws AutomationException {
+		log.info("selectState(String state) is invoked");
 		BrowserUtils.selectValueByName(drpState, state);
+		log.info("selectState(String state) is completed");
 	}
 
 	/**
@@ -271,7 +317,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setPostalCode(String postalCode) throws AutomationException {
+		log.info("setPostalCode(String postalCode) is invoked");
 		BrowserUtils.write(tbxPostalCode, postalCode);
+		log.info("setPostalCode(String postalCode) is completed");
 
 	}
 
@@ -282,7 +330,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void selectCountry(String country) throws AutomationException {
+		log.info("selectCountry(String country) is invoked");
 		BrowserUtils.selectValueByName(drpCountry, country);
+		log.info("selectCountry(String country) is completed");
 
 	}
 
@@ -294,7 +344,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setMobilePhone(String phoneNumber) throws AutomationException {
+		log.info("setMobilePhone(String phoneNumber) is invoked");
 		BrowserUtils.write(tbxMobilePhoneNumber, phoneNumber);
+		log.info("setMobilePhone(String phoneNumber) is completed");
 
 	}
 
@@ -305,7 +357,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void setAddressAlias(String addressAlias) throws AutomationException {
+		log.info("setMobilePhone(String phoneNumber) is invoked");
 		BrowserUtils.write(tbxAddressAlias, addressAlias);
+		log.info("setMobilePhone(String phoneNumber) is completed");
 
 	}
 
@@ -317,7 +371,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void register() throws AutomationException {
+		log.info("register() is invoked");
 		BrowserUtils.click(btnRegister);
+		log.info("register() is completed");
 	}
 
 	/**
@@ -330,6 +386,7 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isUseSameAddressOptionDisplayed() throws AutomationException {
+		log.info("isUseSameAddressOptionDisplayed() is invoked and boolean will be returned");
 		return BrowserUtils.isDisplayed(cbxUseSameAddress);
 	}
 
@@ -340,7 +397,9 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void agreeToTermsAndService() throws AutomationException {
+		log.info("agreeToTermsAndService() is invoked");
 		cbxTermsOfService.click();
+		log.info("agreeToTermsAndService() is completed");
 		// Helper.click( cbxTermsOfService);
 
 	}
@@ -353,6 +412,7 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public String getProductNameOnConfirmOrderScreen() throws AutomationException {
+		log.info("agreeToTermsAndService() is invoked and string will be returned");
 		return lnkConfirmOrderProductName.getText();
 	}
 
@@ -364,6 +424,7 @@ public class CheckoutPage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public String getProductSizeOnConfirmOrderScreen() throws AutomationException {
+		log.info("getProductSizeOnConfirmOrderScreen() is invoked and string will be returned");
 		String[] productDetails = txtConfirmOrderProductSize.getText().split(",");
 		return productDetails[1].split(":")[1];
 	}

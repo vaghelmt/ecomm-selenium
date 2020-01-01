@@ -17,52 +17,71 @@ import framework.BrowserUtils;
  * doing so is declares and initializes all the useful WebElements required for
  * test script and also implements re-usable methods dealing with
  * functionalities on Home page
+ * @author Mitulsinh Vaghela
+ * @version 1.0
  */
 public class HomePage extends BasePage {
-
+	
+	/**
+	 * logger reference variable
+	 */
 	private static final Logger log = Logger.getLogger(HomePage.class);
-//	WebgetDriver() getDriver();
-//	WebgetDriver()Wait wait;
-	QuickView poQuickView = null;
 
+	/**reference variable to store quick view page object as and when it is returned
+	 */
+	private QuickView poQuickView = null;
+
+	/**refers to image that is a logo which is displayed adjacent to search bar 
+	 * (your logo - a new experience)
+	 */
 	@FindBy(xpath = "//img[@class='logo img-responsive']")
-	WebElement imgLogo;
+	private WebElement imgLogo;
 
-//	@FindBy(xpath = "//li[@class='sfHover']//ul//li//a[contains(text(),'Summer Dresses')]")
-//	WebElement submenu_summerDresses;
-//
-//	@FindBy(xpath = "//li[@class='ajax_block_product col-xs-12 col-sm-6 col-md-4 last-in-line last-line first-item-of-tablet-line last-item-of-mobile-line last-mobile-line hovered']//img[@class='replace-2x img-responsive']")
-//	WebElement chiffon_picture;
-
+	/**
+	 * refers to quick view links displayed for products on results page
+	 */
 	@FindBy(xpath = "//a[@class='quick-view']")
-	List<WebElement> lnkQuickView;
+	private List<WebElement> lnkQuickView;
 
+	//refers to the cart label displayed adjacent to search bar
 	@FindBy(xpath = "//a[@title='View my shopping cart']")
-	WebElement lnkViewShoppingCart;
+	private WebElement lnkViewShoppingCart;
 
+	/**refers to check out button that is displayed when a fly out appears when
+	 * hovered over the cart label
+	 */
 	@FindBy(id = "button_order_cart")
-	WebElement btnCheckout;
+	private WebElement btnCheckout;
 
+	/**refers to proceed to checkout link displayed on add-to-cart successful 
+	 * modal window
+	 */
 	@FindBy(xpath = "//a[@class='button btn btn-default standard-checkout button-medium']//span[contains(text(),'Proceed to checkout')]")
-	WebElement lnkProceedToCheckOut;
+	private WebElement lnkProceedToCheckOut;
 
+	/**refers to email address field*/
 	@FindBy(id = "email_create")
-	WebElement emailAddress;
+	private WebElement emailAddress;
 
+	/**refers to the create account label*/
 	@FindBy(xpath = "//form[@id='create-account_form']//span[1]")
-	WebElement createAccount;
+	private WebElement createAccount;
 
+	/**refers to the frame that contains the quick view for a product*/
 	@FindBy(css = "iframe.fancybox-iframe")
-	WebElement ifrQuickView;
+	private WebElement ifrQuickView;
 
+	/**refers to the ok icon displayed on the add-to-cart successful modal window*/
 	@FindBy(css = "i.icon-ok")
-	WebElement icnOK;
+	private WebElement icnOK;
 
+	/**refers to the product name displayed on the add-to-cart successful modal*/
 	@FindBy(id = "layer_cart_product_title")
-	WebElement txtProductNameOnCartSuccess;
+	private WebElement txtProductNameOnCartSuccess;
 
+	/**refers to continue shopping button on add-to-cart successful modal*/
 	@FindBy(xpath = "//span[@class='continue btn btn-default button exclusive-medium']//span[1]")
-	WebElement btnContinueShopping;
+	private WebElement btnContinueShopping;
 
 	/**
 	 * This constructor helps instantiates the home page object and along with it
@@ -74,9 +93,9 @@ public class HomePage extends BasePage {
 	 */
 	public HomePage(WebDriver driver) {
 		super(driver);
-//		this.getDriver() = getDriver();
-//		this.wait = wait;
+		log.info("Home page constructor is invoked");
 		PageFactory.initElements(getDriver(), this);
+		log.info("Home page objects are initialized successfully and constructor ends");
 	}
 
 	/**
@@ -86,7 +105,9 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void launchApp(String url) throws AutomationException {
+		log.info("launchApp(String url) is invoked");
 		this.getDriver().get(url);
+		log.info("launchApp(String url) is completed");
 
 	}
 
@@ -98,8 +119,11 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void hoverOverMenu(String menu) throws AutomationException {
+		log.info("hoverOverMenu(String menu) is invoked");
+		/**refers to locator for Main menu */
 		String locXpMenu = "//a[@class='sf-with-ul'][contains(text(),'" + menu + "')]";
 		BrowserUtils.moveMouseOverElement(getDriver().findElement(By.xpath(locXpMenu)));
+		log.info("hoverOverMenu(String menu) is completed");
 	}
 
 	/**
@@ -110,6 +134,7 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isLogoDisplayed() throws AutomationException {
+		log.info("isLogoDisplayed() is invoked and boolean will be returned");
 		return BrowserUtils.isDisplayed(imgLogo);
 	}
 
@@ -121,9 +146,12 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void clickOnSubMenu(String subMenu) throws AutomationException {
+		log.info("isLogoDisplayed() is invoked");
+		/**refers to locator for submenu*/
 		String locXpSubMenu = "//ul[@class='submenu-container clearfix first-in-line-xs']//ul//li//a[contains(text(),'"
 				+ subMenu + "')]";
 		BrowserUtils.click(getDriver().findElement(By.xpath(locXpSubMenu)));
+		log.info("isLogoDisplayed() is completed");
 	}
 
 	/**
@@ -136,6 +164,8 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isCategoryResultsDisplayed(String category) throws AutomationException {
+		log.info("isCategoryResultsDisplayed(String category) is invoked and boolean will be returned");
+		/**refers to locator for category results*/
 		String locXpCatgResult = "//span[@class='cat-name' and contains(text(),'" + category + "')]";
 		return BrowserUtils.isDisplayed(getDriver().findElement(By.xpath(locXpCatgResult)));
 	}
@@ -148,9 +178,11 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void hoverOverSearchResult(String productName) throws AutomationException {
+		log.info("hoverOverSearchResult(String productName) is invoked");
 		String locXpSearchResult = "//div[@class='right-block']//a[@class='product-name'][contains(text(),'"
 				+ productName + "')]";
 		BrowserUtils.moveMouseOverElement(getDriver().findElement(By.xpath(locXpSearchResult)));
+		log.info("hoverOverSearchResult(String productName) is completed");
 	}
 
 	/**
@@ -161,6 +193,7 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isQuickViewDisplayed() throws AutomationException {
+		log.info("isQuickViewDisplayed() is invoked and boolean will be returned");
 		Boolean displayFlag = false;
 		for (WebElement elem : lnkQuickView) {
 			if (BrowserUtils.isDisplayed(elem)) {
@@ -177,6 +210,7 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public QuickView clickOnQuickView() throws AutomationException {
+		log.info("clickOnQuickView() is invoked and boolean will be returned");
 		for (WebElement elem : lnkQuickView) {
 			if (BrowserUtils.isDisplayed(elem)) {
 				BrowserUtils.click(elem);
@@ -194,6 +228,7 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public boolean isAddToCartSuccessful() throws AutomationException {
+		log.info("isAddToCartSuccessful() is invoked and boolean will be returned");
 		return (BrowserUtils.isDisplayed(icnOK) & BrowserUtils.isDisplayed(txtProductNameOnCartSuccess));
 	}
 
@@ -204,7 +239,9 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public void continueShopping() throws AutomationException {
+		log.info("continueShopping() is invoked");
 		BrowserUtils.click(btnContinueShopping);
+		log.info("continueShopping() is completed");
 	}
 
 	/**
@@ -214,6 +251,7 @@ public class HomePage extends BasePage {
 	 * @author Mitulsinh Vaghela
 	 */
 	public CheckoutPage goToCheckoutPage() throws AutomationException {
+		log.info("goToCheckoutPage() is invoked and boolean will be returned");
 		BrowserUtils.moveMouseOverElement(lnkViewShoppingCart);
 		BrowserUtils.click(btnCheckout);
 		return new CheckoutPage();
