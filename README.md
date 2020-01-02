@@ -15,7 +15,7 @@ The use of TestNG and Maven also makes this project very much CI/CD friendly to 
 
 The project uses http://automationpractice.com website for coding purposes.
 
-Apart from the automation project, this repo also contains a test case sheet that incorporates also the test cases for "Create New Account" use case. This file is located under /resources folder.
+Apart from the automation project, this repo also contains a test case sheet that incorporates test cases for "Create New Account" use case. This file is located under /resources folder.
 
 You might see some major and minor updates from time to time as my knowledge on the technology evolves.
 
