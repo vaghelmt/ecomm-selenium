@@ -1,6 +1,4 @@
 # ecomm-selenium
-This repository contains selenium java automation scripts for major test scenarios on Amazon Canada platform. The automation is implemeneted using Page Object Model design pattern. Other tools used include Maven and TestNG.
-
 This is a test automation project which is an attempt to demo my skills at creating automation frameworks for business applications.
 
 The framework uses the following technology stack - 
